@@ -1,0 +1,16 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/action_settings"/>
+    
+    <item android:id="@+id/menuitem_logout"
+          android:icon="@drawable/ic_menu_stop"
+          android:title="@string/option_menu_logout" />
+    <item android:id="@+id/menuitem_prefs"
+          android:title="@string/option_menu_prefs" />
+
+</menu>
+
