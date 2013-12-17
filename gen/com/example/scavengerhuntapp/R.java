@@ -25,19 +25,21 @@ public final class R {
         public static final int ic_menu_stop=0x7f020001;
     }
     public static final class id {
-        public static final int action_settings=0x7f08000e;
+        public static final int action_settings=0x7f080010;
         public static final int enterText=0x7f080004;
         public static final int listView1=0x7f080005;
         public static final int loginbutton_cancel=0x7f08000a;
         public static final int loginbutton_continue=0x7f080009;
         public static final int mainMenuButton_joinGame=0x7f08000c;
         public static final int mainMenuButton_myGames=0x7f08000d;
-        public static final int mainMenuButton_newGame=0x7f08000b;
         public static final int manageItemsButton_addItem=0x7f080003;
         public static final int manageItemsButton_cancel=0x7f080002;
         public static final int manageItemsButton_done=0x7f080001;
-        public static final int menuitem_logout=0x7f08000f;
-        public static final int menuitem_prefs=0x7f080010;
+        public static final int menuitem_logout=0x7f080011;
+        public static final int menuitem_prefs=0x7f080012;
+        public static final int newGameButton_cancel=0x7f08000f;
+        public static final int newGameButton_continue=0x7f08000e;
+        public static final int newGameButton_name=0x7f08000b;
         public static final int textView1=0x7f080000;
         public static final int textbox_loginEmail=0x7f080008;
         public static final int textbox_loginPassword=0x7f080007;
@@ -59,13 +61,14 @@ public final class R {
         public static final int app_name=0x7f050002;
         /**  Game Items Manage 
          */
-        public static final int header_itemlist=0x7f050024;
+        public static final int header_itemlist=0x7f050025;
         public static final int hello_world=0x7f050004;
-        public static final int hint_additem=0x7f050026;
+        public static final int hint_additem=0x7f050027;
         public static final int hint_email=0x7f050013;
+        public static final int hint_newgamename=0x7f050024;
         public static final int hint_password=0x7f050011;
         public static final int hint_username=0x7f05000f;
-        public static final int label_additem=0x7f050025;
+        public static final int label_additem=0x7f050026;
         /**  Generic 
          */
         public static final int label_cancel=0x7f050006;

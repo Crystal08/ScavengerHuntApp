@@ -18,7 +18,7 @@
         android:textStyle="bold" />
 
         <Button
-         android:id="@+id/mainMenuButton_newGame"
+         android:id="@+id/newGameButton_name"
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
          android:gravity="center"

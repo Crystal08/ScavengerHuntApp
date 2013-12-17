@@ -1,5 +1,10 @@
 package com.example.scavengerhuntapp;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.json.JSONArray;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -39,10 +44,19 @@ public class GameItemsActivity extends Activity {
     query.getInBackground(i.getStringExtra("gameInfoId"), new GetCallback<ParseObject>() {
       public void done(ParseObject gameInfo, ParseException e) {
         if (e == null) {
-          String itemName = gameInfo.getString("itemName");
-          if (itemName != null) {
-            String[] itemsList = new String[]{itemName};
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, itemsList);
+          JSONArray items = gameInfo.getJSONArray("itemsList"); 
+          if (items != null) {        
+            //Now have to convert JSONArray 'items' to String Array 'itemsList' so that ArrayAdapter will accept it as argument
+            List<String> itemsList = new ArrayList<String>();
+            for(int i = 0; i < items.length(); i++){
+              try{             
+                itemsList.add(items.getString(i));
+              }
+              catch (Exception exc) {
+                Log.d("ScavengerHuntApp", "JSONObject exception: " + Log.getStackTraceString(exc));
+              }
+            }
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, itemsList); 
             ListView listView = (ListView) findViewById(R.id.listView1);
             listView.setAdapter(adapter);  
           }
@@ -68,13 +82,24 @@ public class GameItemsActivity extends Activity {
         query.getInBackground(i.getStringExtra("gameInfoId"), new GetCallback<ParseObject>() {
           public void done(ParseObject gameInfo, ParseException e) {
             if (e == null) {
-              final String item_name = userInput.getText().toString().trim(); 
-              gameInfo.put("itemName", item_name); 
-              gameInfo.saveInBackground();
-              finish();
-              startActivity(getIntent());
-              //refresh page
-            }
+              final String new_item = userInput.getText().toString().trim(); 
+              JSONArray items = gameInfo.getJSONArray("itemsList"); 
+              if (items != null) {
+                items.put(new_item); 
+                gameInfo.put("itemsList", items);   
+                gameInfo.saveInBackground();
+                finish();
+                startActivity(getIntent()); 
+              }  
+              else { 
+                JSONArray new_items = new JSONArray();
+                new_items.put(new_item);
+                gameInfo.put("itemsList", new_items);
+                gameInfo.saveInBackground();
+                finish();
+                startActivity(getIntent());
+             }
+            }    
             else{
               Context context = getApplicationContext();
               CharSequence text = "Sorry, item did not save. Please try again.";
@@ -91,6 +116,10 @@ public class GameItemsActivity extends Activity {
     doneButton = (Button) findViewById(R.id.manageItemsButton_done); 
     doneButton.setOnClickListener(new OnClickListener() {
       public void onClick(View v) {
+        Context context = getApplicationContext();
+        CharSequence text = "New Game Saved";
+        int duration = Toast.LENGTH_SHORT;                     
+        Toast.makeText(context, text, duration).show();
         finish();
         Intent i = new Intent(GameItemsActivity.this, MainMenuActivity.class);
         GameItemsActivity.this.startActivity(i);

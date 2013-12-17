@@ -37,7 +37,7 @@ public class MainMenuActivity extends Activity {
    * Setup the Screen callbacks
    */
   private void setupButtonCallbacks() {
-    newGameButton = (Button) findViewById(R.id.mainMenuButton_newGame);
+    newGameButton = (Button) findViewById(R.id.newGameButton_name);
     newGameButton.setOnClickListener(new OnClickListener() {
       public void onClick(View v) {
         // XXX open NewGameActivity
