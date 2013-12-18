@@ -56,6 +56,10 @@
     <string name="header_itemlist">Items to find for this game:</string>
     <string name="label_additem">Add Item</string>
     <string name="hint_additem">Add item? e.g. Yellow Volkswagen</string>
+    
+      <!-- View My Games -->
+    <string name="header_myGamesList">My Games:</string>
+    <string name="label_back">Back</string> 
    
     
 

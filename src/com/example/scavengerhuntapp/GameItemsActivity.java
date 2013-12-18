@@ -57,7 +57,7 @@ public class GameItemsActivity extends Activity {
               }
             }
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, itemsList); 
-            ListView listView = (ListView) findViewById(R.id.listView1);
+            ListView listView = (ListView) findViewById(R.id.gameItemsListView);
             listView.setAdapter(adapter);  
           }
         }
@@ -113,7 +113,7 @@ public class GameItemsActivity extends Activity {
         });    
       } 
     }); 
-    doneButton = (Button) findViewById(R.id.manageItemsButton_done); 
+    doneButton = (Button) findViewById(R.id.viewMyGamesButton_back); 
     doneButton.setOnClickListener(new OnClickListener() {
       public void onClick(View v) {
         Context context = getApplicationContext();

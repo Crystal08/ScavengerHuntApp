@@ -35,7 +35,6 @@ public class NewGameActivity extends Activity {
     userInputGameStart = (EditText) findViewById(R.id.newGame_startdatetime);
     userInputGameEnd = (EditText) findViewById(R.id.newGame_enddatetime);
     
-    
     newGameButton = (Button) findViewById(R.id.newGameButton_continue);
     newGameButton.setOnClickListener(new OnClickListener() {
       public void onClick(View v) {
@@ -43,10 +42,12 @@ public class NewGameActivity extends Activity {
         final String gameName = userInputGameName.getText().toString().trim(); 
         final String gameStart = userInputGameStart.getText().toString().trim();
         final String gameEnd = userInputGameEnd.getText().toString().trim();
-        gameInfo.put("gameOwner", ParseUser.getCurrentUser().getUsername());
+        
+        gameInfo.put("gameOwner", ParseUser.getCurrentUser());
         gameInfo.put("gameName", gameName);
         gameInfo.put("gameStart", gameStart);
         gameInfo.put("gameEnd", gameEnd);
+        
         gameInfo.saveInBackground(
             new SaveCallback() {
               public void done(final ParseException e) {
