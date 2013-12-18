@@ -17,7 +17,9 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 public class NewGameActivity extends Activity {  
-  private EditText userInput;
+  private EditText userInputGameName;
+  private EditText userInputGameStart;
+  private EditText userInputGameEnd;
   private Button newGameButton;
   private Button cancelButton;
 
@@ -29,14 +31,22 @@ public class NewGameActivity extends Activity {
   }
 
   private void setupButtonCallbacks() {
-    userInput = (EditText) findViewById(R.id.enterText);
+    userInputGameName = (EditText) findViewById(R.id.newGame_name);
+    userInputGameStart = (EditText) findViewById(R.id.newGame_startdatetime);
+    userInputGameEnd = (EditText) findViewById(R.id.newGame_enddatetime);
+    
+    
     newGameButton = (Button) findViewById(R.id.newGameButton_continue);
     newGameButton.setOnClickListener(new OnClickListener() {
       public void onClick(View v) {
         final ParseObject gameInfo = new ParseObject("gameInfo");
-        final String gameName = userInput.getText().toString().trim(); 
+        final String gameName = userInputGameName.getText().toString().trim(); 
+        final String gameStart = userInputGameStart.getText().toString().trim();
+        final String gameEnd = userInputGameEnd.getText().toString().trim();
         gameInfo.put("gameOwner", ParseUser.getCurrentUser().getUsername());
-        gameInfo.put("gameName", gameName); 
+        gameInfo.put("gameName", gameName);
+        gameInfo.put("gameStart", gameStart);
+        gameInfo.put("gameEnd", gameEnd);
         gameInfo.saveInBackground(
             new SaveCallback() {
               public void done(final ParseException e) {

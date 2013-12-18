@@ -47,11 +47,16 @@
       <!-- New Game Create -->
     <string name="prompt_newgamename">What would you like to name your new game?</string>
     <string name="hint_newgamename">e.g. Classic Cars Hunt</string>
-    
+    <string name="prompt_newgamestartdatetime">Start date and time:</string>
+    <string name="hint_newgamestartdatetime">e.g. 27 May 2015 9:00am</string>
+    <string name="prompt_newgameenddatetime">End date and time:</string>
+    <string name="hint_newgameenddatetime">e.g. 29 May 2015 9:00pm</string>
+     
       <!-- Game Items Manage -->
     <string name="header_itemlist">Items to find for this game:</string>
     <string name="label_additem">Add Item</string>
     <string name="hint_additem">Add item? e.g. Yellow Volkswagen</string>
+   
     
 
 </resources>
