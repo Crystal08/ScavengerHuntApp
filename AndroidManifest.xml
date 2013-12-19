@@ -29,6 +29,7 @@
         <activity android:name="MainMenuActivity" android:label="MainMenu"></activity>
         <activity android:name="NewGameActivity" android:label="NewGame"></activity>
         <activity android:name="GameItemsActivity" android:label="GameItems"></activity>
+        <activity android:name="ViewMyGamesActivity" android:label="ViewMyGames"></activity>
     </application>
 
 </manifest>

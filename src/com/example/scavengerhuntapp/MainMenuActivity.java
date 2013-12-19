@@ -60,8 +60,8 @@ public class MainMenuActivity extends Activity {
     myGamesButton.setOnClickListener(new OnClickListener() {
       public void onClick(View v) {
         // XXX open MyGamesActivity
-        // Intent i = new Intent(mThisActivity, MyGamesActivity.class);
-        // mThisActivity.startActivity(i);
+        Intent i = new Intent(MainMenuActivity.this, ViewMyGamesActivity.class);
+        MainMenuActivity.this.startActivity(i);
       }
     });
 

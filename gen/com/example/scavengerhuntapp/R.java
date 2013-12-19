@@ -25,8 +25,6 @@ public final class R {
         public static final int ic_menu_stop=0x7f020001;
     }
     public static final class id {
-        public static final int TextView01=0x7f080012;
-        public static final int TextView03=0x7f080013;
         public static final int action_settings=0x7f080016;
         public static final int enterText=0x7f080004;
         public static final int gameItemsListView=0x7f080005;
@@ -43,9 +41,11 @@ public final class R {
         public static final int newGameButton_cancel=0x7f08000f;
         public static final int newGameButton_continue=0x7f080010;
         public static final int newGameButton_name=0x7f08000b;
-        public static final int newGame_enddatetime=0x7f080014;
+        public static final int newGameButton_setEndDate=0x7f080013;
+        public static final int newGameButton_setEndTime=0x7f080014;
+        public static final int newGameButton_setStartDate=0x7f080011;
+        public static final int newGameButton_setStartTime=0x7f080012;
         public static final int newGame_name=0x7f08000e;
-        public static final int newGame_startdatetime=0x7f080011;
         public static final int textbox_loginEmail=0x7f080008;
         public static final int textbox_loginPassword=0x7f080007;
         public static final int textbox_loginUsername=0x7f080006;
@@ -75,9 +75,7 @@ public final class R {
         public static final int hello_world=0x7f050004;
         public static final int hint_additem=0x7f05002b;
         public static final int hint_email=0x7f050013;
-        public static final int hint_newgameenddatetime=0x7f050028;
         public static final int hint_newgamename=0x7f050024;
-        public static final int hint_newgamestartdatetime=0x7f050026;
         public static final int hint_password=0x7f050011;
         public static final int hint_username=0x7f05000f;
         public static final int label_additem=0x7f05002a;
@@ -105,6 +103,10 @@ public final class R {
         public static final int label_queryErrorMessage=0x7f050018;
         public static final int label_query_in_progress=0x7f050017;
         public static final int label_selectOption=0x7f05001e;
+        public static final int label_setEndDate=0x7f050026;
+        public static final int label_setEndTime=0x7f050028;
+        public static final int label_setStartDate=0x7f050025;
+        public static final int label_setStartTime=0x7f050027;
         public static final int label_signupErrorMessage=0x7f050019;
         public static final int label_signup_in_progress=0x7f050015;
         public static final int label_username=0x7f05000e;
@@ -116,11 +118,9 @@ public final class R {
         public static final int option_menu_refresh=0x7f05000b;
         public static final int parse_app_id=0x7f050000;
         public static final int parse_client_id=0x7f050001;
-        public static final int prompt_newgameenddatetime=0x7f050027;
         /**  New Game Create 
          */
         public static final int prompt_newgamename=0x7f050023;
-        public static final int prompt_newgamestartdatetime=0x7f050025;
         public static final int splash_welcome=0x7f050005;
     }
     public static final class style {

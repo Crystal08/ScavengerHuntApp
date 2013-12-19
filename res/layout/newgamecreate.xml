@@ -50,51 +50,42 @@
         android:textSize="16sp"
         android:textStyle="normal" />
 
-    <EditText
-        android:id="@+id/newGame_startdatetime"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/TextView01"
-        android:layout_marginTop="15dp"
-        android:ems="10"
-        android:hint="@string/hint_newgamestartdatetime"
-        android:imeOptions="actionDone"
-        android:inputType="text" />
-
-    <TextView
-        android:id="@+id/TextView01"
+    <Button
+        android:id="@+id/newGameButton_setStartDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
         android:layout_below="@+id/newGame_name"
-        android:layout_marginTop="16dp"
-        android:text="@string/prompt_newgamestartdatetime"
-        android:textSize="18.0sp"
-        android:textStyle="bold" />
+        android:layout_marginTop="18dp"
+        android:text="@string/label_setStartDate" />
 
-    <TextView
-        android:id="@+id/TextView03"
+    <Button
+        android:id="@+id/newGameButton_setStartTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/newGame_startdatetime"
-        android:layout_marginTop="16dp"
-        android:text="@string/prompt_newgameenddatetime"
-        android:textSize="18.0sp"
-        android:textStyle="bold" />
+        android:layout_alignRight="@+id/newGameButton_setStartDate"
+        android:layout_below="@+id/newGameButton_setStartDate"
+        android:text="@string/label_setStartTime" />
 
-    <EditText
-        android:id="@+id/newGame_enddatetime"
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/newGameButton_setEndDate"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/TextView03"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:hint="@string/hint_newgameenddatetime"
-        android:imeOptions="actionDone"
-        android:inputType="text" />
-    
-</RelativeLayout>
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/newGameButton_setStartTime"
+        android:layout_marginTop="31dp"
+        android:text="@string/label_setEndDate" />
 
+    <Button
+        android:id="@+id/newGameButton_setEndTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/newGameButton_setEndDate"
+        android:text="@string/label_setEndTime" />
+
+</RelativeLayout>
