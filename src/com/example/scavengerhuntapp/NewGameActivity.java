@@ -1,6 +1,7 @@
 package com.example.scavengerhuntapp;
 
 import java.util.Calendar;
+import java.util.Date;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -30,6 +31,7 @@ public class NewGameActivity extends Activity {
   
   private Button setStartDateButton, setStartTimeButton;
   private Button setEndDateButton, setEndTimeButton;
+  private Date gameStartDate;
   static final int STARTDATE_DIALOG_ID = 0;
   static final int STARTTIME_DIALOG_ID = 1;
   static final int ENDDATE_DIALOG_ID = 2;
@@ -112,6 +114,7 @@ public class NewGameActivity extends Activity {
         case STARTDATE_DIALOG_ID:
           //set the selected date in the start date Button
           setStartDateButton.setText("Date selected: "+day+"-"+month+"-"+year);
+          gameStartDate = new Date();   
           break;
         case ENDDATE_DIALOG_ID:
           //set the selected date in the end date Button
@@ -153,6 +156,11 @@ public class NewGameActivity extends Activity {
           }
   };
   
+  private Date convertResultToDateType(){
+    Date date = new Date();
+    return date;
+  };
+  
   @Override
   protected Dialog onCreateDialog(int id) {
     target_dialog_id = id;
@@ -177,13 +185,13 @@ public class NewGameActivity extends Activity {
     //user input for game name
     userInputGameName = (EditText) findViewById(R.id.newGame_name);
       
-    //create new game, then go to GameItemsActivity to choose items
+    //put owner and name to game, then go to GameItemsActivity to choose items
     newGameButton = (Button) findViewById(R.id.newGameButton_continue);
     newGameButton.setOnClickListener(new OnClickListener() {
       public void onClick(View v) { 
         gameInfo.put("gameOwner", ParseUser.getCurrentUser().toString().trim());
         gameInfo.put("gameName", userInputGameName.getText().toString().trim());
-        
+        gameInfo.put("gameStartDate", gameStartDate);
         gameInfo.saveInBackground(
             new SaveCallback() {
               public void done(final ParseException e) {
