@@ -25,20 +25,23 @@ import com.parse.SaveCallback;
 
 public class NewGameActivity extends Activity {  
   private EditText userInputGameName;
+  private ParseObject gameInfo;
   private Button newGameButton, cancelButton;
   
   private Button setStartDateButton, setStartTimeButton;
   private Button setEndDateButton, setEndTimeButton;
   static final int STARTDATE_DIALOG_ID = 0;
   static final int STARTTIME_DIALOG_ID = 1;
-  static final int ENDDATE_DIALOG_ID = 0;
-  static final int ENDTIME_DIALOG_ID = 1;
+  static final int ENDDATE_DIALOG_ID = 2;
+  static final int ENDTIME_DIALOG_ID = 3;
+  int target_dialog_id = -1;
   //variables to save user-selected date and time
   public int year, month, day, hour, minute;
   private int mYear, mMonth, mDay, mHour, mMinute;
   
-  //assign current Date and Time values to variables
+  //get new game, and assign current Date and Time values to variables
   public NewGameActivity(){
+  gameInfo = new ParseObject("gameInfo");  
   final Calendar c = Calendar.getInstance();
   mYear = c.get(Calendar.YEAR);
   mMonth = c.get(Calendar.MONTH);
@@ -51,6 +54,8 @@ public class NewGameActivity extends Activity {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.newgamecreate);
+    
+    //set up for date-and-time-pickers:
     
     //get the references of date-and-time-set buttons
     setStartDateButton = (Button)findViewById(R.id.newGameButton_setStartDate);
@@ -86,9 +91,12 @@ public class NewGameActivity extends Activity {
         showDialog(ENDTIME_DIALOG_ID);
       }
     });
-    //call to code for creating new game or selecting back button 
+    
+    //set up for buttons to code create new game or to go back 
     setupButtonCallbacks();
   }
+  
+  //methods to support code in onCreate:
   
   //register DatePickerDialog listener
   private DatePickerDialog.OnDateSetListener mDateSetListener =
@@ -100,8 +108,21 @@ public class NewGameActivity extends Activity {
         year = yearSelected;
         month = monthOfYear+1; //adjust start point of picker for month
         day = dayOfMonth;
-        //set the selected date in the Select date Button
-        setStartDateButton.setText("Date selected: "+day+"-"+month+"-"+year);
+        switch(target_dialog_id) {
+        case STARTDATE_DIALOG_ID:
+          //set the selected date in the start date Button
+          setStartDateButton.setText("Date selected: "+day+"-"+month+"-"+year);
+          break;
+        case ENDDATE_DIALOG_ID:
+          //set the selected date in the end date Button
+          setEndDateButton.setText("Date selected: "+day+"-"+month+"-"+year);
+          break;
+        default:
+          Context context = getApplicationContext();
+          CharSequence text = "Sorry, there was a problem saving the date.";
+          int duration = Toast.LENGTH_SHORT;                     
+          Toast.makeText(context, text, duration).show();
+        }
       }
   };
   // register  TimePickerDialog listener                
@@ -114,21 +135,37 @@ public class NewGameActivity extends Activity {
               hour = hourOfDay;
               minute = min;
               final String selected_time = String.format("%02d:%02d", hour, minute);
-              // Set the Selected Date in Select date Button
-              setStartTimeButton.setText("Time selected: "+selected_time);
+              switch(target_dialog_id) {
+              case STARTTIME_DIALOG_ID:
+                // Set the Selected Time in Select time Button
+                setStartTimeButton.setText("Time selected: "+selected_time);
+                break;
+              case ENDTIME_DIALOG_ID:
+                // Set the Selected Time in Select time Button
+                setEndTimeButton.setText("Time selected: "+selected_time); 
+                break;
+              default:
+                Context context = getApplicationContext();
+                CharSequence text = "Sorry, there was a problem saving the time.";
+                int duration = Toast.LENGTH_SHORT;                     
+                Toast.makeText(context, text, duration).show();
+              }
           }
   };
   
   @Override
   protected Dialog onCreateDialog(int id) {
+    target_dialog_id = id;
     switch (id) {
     case STARTDATE_DIALOG_ID:
+    case ENDDATE_DIALOG_ID:
 // create a new DatePickerDialog with values you want to show
         return new DatePickerDialog(this,
                     mDateSetListener,
                     mYear, mMonth, mDay);
 // create a new TimePickerDialog with values you want to show
     case STARTTIME_DIALOG_ID:
+    case ENDTIME_DIALOG_ID:
         return new TimePickerDialog(this,
                 mTimeSetListener, mHour, mMinute, false);   
     }
@@ -143,12 +180,9 @@ public class NewGameActivity extends Activity {
     //create new game, then go to GameItemsActivity to choose items
     newGameButton = (Button) findViewById(R.id.newGameButton_continue);
     newGameButton.setOnClickListener(new OnClickListener() {
-      public void onClick(View v) {
-        final ParseObject gameInfo = new ParseObject("gameInfo");
-        final String gameName = userInputGameName.getText().toString().trim(); 
-        
-        gameInfo.put("gameOwner", ParseUser.getCurrentUser());
-        gameInfo.put("gameName", gameName);
+      public void onClick(View v) { 
+        gameInfo.put("gameOwner", ParseUser.getCurrentUser().toString().trim());
+        gameInfo.put("gameName", userInputGameName.getText().toString().trim());
         
         gameInfo.saveInBackground(
             new SaveCallback() {
