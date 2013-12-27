@@ -7,7 +7,7 @@
     android:layout_margin="10dp" >
 
     <TextView
-        android:id="@+id/header_myGamesList"
+        android:id="@+id/header_myItemsList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -17,7 +17,7 @@
         android:textStyle="bold" />
 
     <Button
-        android:id="@+id/viewMyGamesButton_back"
+        android:id="@+id/manageItemsButton_done"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -31,9 +31,9 @@
         android:id="@+id/myGamesListView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/viewMyGamesButton_back"
+        android:layout_above="@+id/manageItemsButton_done"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/header_myGamesList"
+        android:layout_below="@+id/header_myItemsList"
         android:layout_marginRight="19dp" >
 
     </ListView>

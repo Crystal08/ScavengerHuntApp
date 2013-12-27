@@ -7,7 +7,7 @@
     android:layout_margin="10dp" >
 
     <TextView
-        android:id="@+id/header_myGamesList"
+        android:id="@+id/header_myItemsList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
@@ -16,7 +16,7 @@
         android:textStyle="bold" />
 
     <Button
-        android:id="@+id/viewMyGamesButton_back"
+        android:id="@+id/manageItemsButton_done"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/manageItemsButton_cancel"
@@ -42,7 +42,7 @@
         android:id="@+id/manageItemsButton_addItem"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/viewMyGamesButton_back"
+        android:layout_above="@+id/manageItemsButton_done"
         android:layout_alignParentLeft="true"
         android:gravity="center"
         android:text="@string/label_additem"
@@ -66,7 +66,7 @@
         android:layout_width="275dp"
         android:layout_height="204dp"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/header_myGamesList" >
+        android:layout_below="@+id/header_myItemsList" >
     </ListView>
     
 </RelativeLayout>

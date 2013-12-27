@@ -8,7 +8,7 @@
     android:orientation="vertical" >
 
     <TextView
-        android:id="@+id/header_myGamesList"
+        android:id="@+id/header_myItemsList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
@@ -21,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/header_myGamesList"
+        android:layout_below="@+id/header_myItemsList"
         android:ems="10"
         android:hint="@string/hint_newgamename"
         android:imeOptions="actionDone"

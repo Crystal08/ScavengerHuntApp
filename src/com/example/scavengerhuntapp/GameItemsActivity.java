@@ -113,15 +113,15 @@ public class GameItemsActivity extends Activity {
         });    
       } 
     }); 
-    doneButton = (Button) findViewById(R.id.viewMyGamesButton_back); 
+    doneButton = (Button) findViewById(R.id.manageItemsButton_done); 
     doneButton.setOnClickListener(new OnClickListener() {
       public void onClick(View v) {
         Context context = getApplicationContext();
-        CharSequence text = "New Game Saved";
+        CharSequence text = "Game Items Saved";
         int duration = Toast.LENGTH_SHORT;                     
         Toast.makeText(context, text, duration).show();
         finish();
-        Intent i = new Intent(GameItemsActivity.this, MainMenuActivity.class);
+        Intent i = new Intent(GameItemsActivity.this, GamePlayersActivity.class);
         GameItemsActivity.this.startActivity(i);
       } 
     });

@@ -62,7 +62,7 @@ public class ViewMyGamesActivity extends Activity {
   }
   
   private void setupButtonCallbacks() { 
-    backButton = (Button) findViewById(R.id.viewMyGamesButton_back); 
+    backButton = (Button) findViewById(R.id.manageItemsButton_done); 
     backButton.setOnClickListener(new OnClickListener() {
       public void onClick(View v) {
         finish();

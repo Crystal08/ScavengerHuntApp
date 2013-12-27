@@ -6,14 +6,12 @@
     <string name="hello_world">Hello world!</string>
     <string name="splash_welcome">Get ready to play!</string>
     
-     <!-- Generic --> 
+      <!-- Generic --> 
     <string name="label_cancel">Cancel</string>
     <string name="label_continue">Continue</string>
     <string name="label_done">Done</string>
     
-    
-    
-        <!-- Menu Options -->
+      <!-- Menu Options -->
     <string name="option_menu_about">About</string>
     <string name="option_menu_prefs">Preferences</string>
     <string name="option_menu_refresh">Refresh</string>
@@ -57,6 +55,9 @@
     <string name="label_additem">Add Item</string>
     <string name="hint_additem">Add item? e.g. Yellow Volkswagen</string>
     
+      <!-- Game Players Manage -->
+    <string name="header_playerlist">Choose players for this game:</string>  
+        
       <!-- View My Games -->
     <string name="header_myGamesList">My Games:</string>
     <string name="label_back">Back</string>
