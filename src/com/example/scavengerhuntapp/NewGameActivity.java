@@ -2,6 +2,7 @@ package com.example.scavengerhuntapp;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -28,10 +29,10 @@ public class NewGameActivity extends Activity {
   private EditText userInputGameName;
   private ParseObject gameInfo;
   private Button newGameButton, cancelButton;
-  
   private Button setStartDateButton, setStartTimeButton;
   private Button setEndDateButton, setEndTimeButton;
-  private Date gameStartDate;
+  
+  private Date startDateTime, endDateTime;
   static final int STARTDATE_DIALOG_ID = 0;
   static final int STARTTIME_DIALOG_ID = 1;
   static final int ENDDATE_DIALOG_ID = 2;
@@ -39,9 +40,11 @@ public class NewGameActivity extends Activity {
   int target_dialog_id = -1;
   //variables to save user-selected date and time
   public int year, month, day, hour, minute;
+  public int startYear, startMonth, startDay, startHour, startMinute;
+  public int endYear, endMonth, endDay, endHour, endMinute;
+  //variables for current date and time
   private int mYear, mMonth, mDay, mHour, mMinute;
-  
-  //get new game, and assign current Date and Time values to variables
+  //get new game, and assign current Date and Time values for default date/time picker displays
   public NewGameActivity(){
   gameInfo = new ParseObject("gameInfo");  
   final Calendar c = Calendar.getInstance();
@@ -57,68 +60,64 @@ public class NewGameActivity extends Activity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.newgamecreate);
     
-    //set up for date-and-time-pickers:
+    //set up buttons to launch date and time pickers:
     
-    //get the references of date-and-time-set buttons
     setStartDateButton = (Button)findViewById(R.id.newGameButton_setStartDate);
     setStartTimeButton = (Button)findViewById(R.id.newGameButton_setStartTime);
     setEndDateButton = (Button)findViewById(R.id.newGameButton_setEndDate);
     setEndTimeButton = (Button)findViewById(R.id.newGameButton_setEndTime);
     
-    //Set ClickListener on setStartDateButton
+    //Set listeners on buttons to launch date and time pickers:
+    
     setStartDateButton.setOnClickListener(new View.OnClickListener(){
       public void onClick(View v){
-      //Show the DatePicker Dialog
         showDialog(STARTDATE_DIALOG_ID);
       }
     });
-    //Set ClickListener on setStartTimeButton
     setStartTimeButton.setOnClickListener(new View.OnClickListener(){
       public void onClick(View v){
-      //Show the TimePicker Dialog
         showDialog(STARTTIME_DIALOG_ID);
       }
     });
-    //Set ClickListener on setEndDateButton
     setEndDateButton.setOnClickListener(new View.OnClickListener(){
       public void onClick(View v){
-      //Show the DatePicker Dialog
         showDialog(ENDDATE_DIALOG_ID);
       }
     });
-    //Set ClickListener on setEndTimeButton
     setEndTimeButton.setOnClickListener(new View.OnClickListener(){
       public void onClick(View v){
-      //Show the TimePicker Dialog
         showDialog(ENDTIME_DIALOG_ID);
       }
     });
     
-    //set up for buttons to code create new game or to go back 
+    //set up buttons to create new game or to go back 
     setupButtonCallbacks();
   }
   
   //methods to support code in onCreate:
   
   //register DatePickerDialog listener
-  private DatePickerDialog.OnDateSetListener mDateSetListener =
+  public DatePickerDialog.OnDateSetListener mDateSetListener =
       new DatePickerDialog.OnDateSetListener(){
       //the callback received when the user "sets" the Date in the DatePickerDialog
-      // I'll want to add to this- probably to set variable to pass to Parse?
         public void onDateSet(DatePicker view, int yearSelected, 
           int monthOfYear, int dayOfMonth) {
-        year = yearSelected;
-        month = monthOfYear+1; //adjust start point of picker for month
         day = dayOfMonth;
+        month = monthOfYear;
+        final int display_month = month + 1; //java uses 0-based month system
+        year = yearSelected;
         switch(target_dialog_id) {
         case STARTDATE_DIALOG_ID:
-          //set the selected date in the start date Button
-          setStartDateButton.setText("Date selected: "+day+"-"+month+"-"+year);
-          gameStartDate = new Date();   
+          //display the selected date on the start date button
+          setStartDateButton.setText("Date selected: "+day+"-"+display_month+"-"+year);
+          //fill startYear, startMonth, startDay instance variables with user-selected values
+          setStartDate(year, month, day); 
           break;
         case ENDDATE_DIALOG_ID:
-          //set the selected date in the end date Button
-          setEndDateButton.setText("Date selected: "+day+"-"+month+"-"+year);
+          //display the selected date in the end date button
+          setEndDateButton.setText("Date selected: "+day+"-"+display_month+"-"+year);
+          //fill endYear, endMonth, endDay instance variables with user-selected values
+          setEndDate(year, month, day);
           break;
         default:
           Context context = getApplicationContext();
@@ -131,21 +130,24 @@ public class NewGameActivity extends Activity {
   // register  TimePickerDialog listener                
   private TimePickerDialog.OnTimeSetListener mTimeSetListener =
       new TimePickerDialog.OnTimeSetListener() {
-      // the callback received when the user "sets" the TimePickerDialog in the dialog
-      // I'll want to add to this- probably to set variable to pass to Parse?
+      // the callback received when the user "sets" the Time in the TimePickerDialog
          public void onTimeSet(TimePicker view, int hourOfDay, 
               int min) {
               hour = hourOfDay;
               minute = min;
-              final String selected_time = String.format("%02d:%02d", hour, minute);
+              String selected_time = String.format(Locale.US, "%02d:%02d", hour, minute);
               switch(target_dialog_id) {
               case STARTTIME_DIALOG_ID:
-                // Set the Selected Time in Select time Button
+                //display the selected time on the start time button
                 setStartTimeButton.setText("Time selected: "+selected_time);
+                //fill startHour, startMinute instance variables with user-selected values
+                setStartTime(hour, minute);
                 break;
               case ENDTIME_DIALOG_ID:
-                // Set the Selected Time in Select time Button
-                setEndTimeButton.setText("Time selected: "+selected_time); 
+                //display the selected time on the end time button
+                setEndTimeButton.setText("Time selected: "+selected_time);
+                //fill endHour, endMinute instance variables with user-selected values
+                setEndTime(hour, minute);
                 break;
               default:
                 Context context = getApplicationContext();
@@ -156,22 +158,17 @@ public class NewGameActivity extends Activity {
           }
   };
   
-  private Date convertResultToDateType(){
-    Date date = new Date();
-    return date;
-  };
-  
   @Override
   protected Dialog onCreateDialog(int id) {
     target_dialog_id = id;
     switch (id) {
     case STARTDATE_DIALOG_ID:
     case ENDDATE_DIALOG_ID:
-// create a new DatePickerDialog with values you want to show
+    // create a new DatePickerDialog with default values displayed
         return new DatePickerDialog(this,
                     mDateSetListener,
                     mYear, mMonth, mDay);
-// create a new TimePickerDialog with values you want to show
+    // create a new TimePickerDialog with default values displayed
     case STARTTIME_DIALOG_ID:
     case ENDTIME_DIALOG_ID:
         return new TimePickerDialog(this,
@@ -180,22 +177,63 @@ public class NewGameActivity extends Activity {
     return null;
   }
   
+  private void setStartDate(int year, int month, int day){
+    startYear = year;
+    startMonth = month;
+    startDay = day;
+  };
+  
+  private void setEndDate(int year, int month, int day){
+    endYear = year;
+    endMonth = month;
+    endDay = day;
+  };
+  
+  private void setStartTime(int hour, int minute){
+    startHour = hour;
+    startMinute = minute;
+  };
+  
+  private void setEndTime(int hour, int minute){
+    endHour = hour;
+    endMinute = minute;
+  };
+  
+  //compile start and end Date objects with start and end datetimes
+  private Date returnStartDateTime(){
+    Calendar c1 = Calendar.getInstance();
+    //fill Calendar instance with user-inputted values, then set
+    c1.set(startYear, startMonth, startDay, startHour, startMinute);
+    startDateTime = c1.getTime();
+    return startDateTime;
+  };
+  
+  private Date returnEndDateTime(){
+    Calendar c1 = Calendar.getInstance();
+    //fill Calendar instance with user-inputted values, then set
+    c1.set(endYear, endMonth, endDay, endHour, endMinute);
+    endDateTime = c1.getTime();
+    return endDateTime;
+  };
+    
   private void setupButtonCallbacks() {
     
     //user input for game name
     userInputGameName = (EditText) findViewById(R.id.newGame_name);
       
-    //put owner and name to game, then go to GameItemsActivity to choose items
+    //put owner, name, and start/end datetimes to game, then go to GameItemsActivity to choose items
     newGameButton = (Button) findViewById(R.id.newGameButton_continue);
     newGameButton.setOnClickListener(new OnClickListener() {
       public void onClick(View v) { 
         gameInfo.put("gameOwner", ParseUser.getCurrentUser().toString().trim());
         gameInfo.put("gameName", userInputGameName.getText().toString().trim());
-        gameInfo.put("gameStartDate", gameStartDate);
+        gameInfo.put("gameStartDateTime", returnStartDateTime());
+        gameInfo.put("gameEndDateTime", returnEndDateTime());
         gameInfo.saveInBackground(
             new SaveCallback() {
               public void done(final ParseException e) {
-                if (e == null) {           
+                if (e == null) {   
+                  Log.d("ScavengerHuntApp", startDateTime.toString()); 
                   final String gameInfoId = gameInfo.getObjectId();
                   Intent i = new Intent(NewGameActivity.this, GameItemsActivity.class);
                   i.putExtra("gameInfoId", gameInfoId);
