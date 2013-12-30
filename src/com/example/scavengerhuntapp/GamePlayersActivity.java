@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
@@ -18,12 +19,15 @@ import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 public class GamePlayersActivity extends Activity {  
   private Button doneButton;
   private Button cancelButton;
+  private List<ParseUser> playerList = new ArrayList<ParseUser>();
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -51,6 +55,7 @@ public class GamePlayersActivity extends Activity {
                 Log.d("ScavengerHuntApp", "Problem building user list: " + Log.getStackTraceString(exc));
               }
             }
+            playerList = userList;
             final ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_multiple_choice, usernameList); 
             final ListView playerListView = (ListView) findViewById(R.id.gamePlayersListView);
             playerListView.setAdapter(adapter);
@@ -73,15 +78,17 @@ public class GamePlayersActivity extends Activity {
     doneButton = (Button) findViewById(R.id.managePlayersButton_done); 
     doneButton.setOnClickListener(new OnClickListener() {
       public void onClick(View v) {
-        Context context = getApplicationContext();
+        saveSelectedPlayers(getSelectedPlayers());             
+        final Context context = getApplicationContext();   
         CharSequence text = "New Game Saved";
         int duration = Toast.LENGTH_SHORT;                     
         Toast.makeText(context, text, duration).show();
         finish();
-        Intent i = new Intent(GamePlayersActivity.this, MainMenuActivity.class);
+        final Intent i = new Intent(GamePlayersActivity.this, MainMenuActivity.class);
         GamePlayersActivity.this.startActivity(i);
       } 
-    });
+    }); 
+       
     cancelButton = (Button) findViewById(R.id.managePlayersButton_cancel); 
     cancelButton.setOnClickListener(new OnClickListener() {
       public void onClick(View v) {
@@ -90,7 +97,44 @@ public class GamePlayersActivity extends Activity {
         GamePlayersActivity.this.startActivity(i);
       }
     });
+  }
+  
+  private List<ParseUser> getSelectedPlayers() {
+    final List<ParseUser> selectedPlayers = new ArrayList<ParseUser>();
+    final ListView playerListView = (ListView) findViewById(R.id.gamePlayersListView);
+    final SparseBooleanArray checkedPlayers = playerListView.getCheckedItemPositions();
+    if (checkedPlayers != null) {
+      for(int i = 0; i < checkedPlayers.size(); i++){
+        if (checkedPlayers.valueAt(i)) { //was getting an invalid index 0 error, so check here
+          selectedPlayers.add(playerList.get(checkedPlayers.keyAt(i))); 
+        }
+      }
+    }
+    return selectedPlayers;
+  }
+
+  private void saveSelectedPlayers(List<ParseUser> selectedPlayersList){
+    for(int i = 0; i < selectedPlayersList.size(); i++){
+      final ParseObject gamePlayer= new ParseObject("gamePlayer");
+      final ParseUser player = selectedPlayersList.get(i); 
+      final Intent intent = getIntent();
+      gamePlayer.put("gameId", intent.getStringExtra("gameInfoId"));
+      gamePlayer.put("playerId", player.getObjectId());
+      gamePlayer.saveInBackground(new SaveCallback(){
+        public void done(ParseException e) {
+          if (e== null){
+            Log.d("ScavengerHuntApp", "PlayerID saved: "+player.getObjectId().toString());
+          }
+          else {
+            Log.d("ScavengerHuntApp", "PlayerID not saved: "+Log.getStackTraceString(e));
+          }
+        }   
+      });
+    }
   }    
+ 
+
+    
 
 }
 

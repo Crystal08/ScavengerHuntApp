@@ -121,7 +121,10 @@ public class GameItemsActivity extends Activity {
         int duration = Toast.LENGTH_SHORT;                     
         Toast.makeText(context, text, duration).show();
         finish();
-        Intent i = new Intent(GameItemsActivity.this, GamePlayersActivity.class);
+        final Intent intent = getIntent();    
+        final String gameInfoId = intent.getStringExtra("gameInfoId");
+        final Intent i = new Intent(GameItemsActivity.this, GamePlayersActivity.class);
+        i.putExtra("gameInfoId", gameInfoId);        
         GameItemsActivity.this.startActivity(i);
       } 
     });
