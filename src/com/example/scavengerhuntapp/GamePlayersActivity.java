@@ -33,11 +33,11 @@ public class GamePlayersActivity extends Activity {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.gameplayersmanage);
-    listCurrentPlayers();
+    listPotentialPlayers();
     setupButtonCallbacks();
   }
   
-  private void listCurrentPlayers(){
+  private void listPotentialPlayers(){
     final ParseQuery<ParseUser> query = ParseUser.getQuery();
     final Context context = this;
     query.selectKeys(Arrays.asList("username"));

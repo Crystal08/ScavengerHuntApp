@@ -6,16 +6,6 @@
     android:layout_gravity="center_vertical"
     android:layout_margin="10dp" >
 
-    <TextView
-        android:id="@+id/header_myItemsList"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:text="@string/header_myGamesList"
-        android:textSize="18.0sp"
-        android:textStyle="bold" />
-
     <Button
         android:id="@+id/manageItemsButton_done"
         android:layout_width="wrap_content"
@@ -28,14 +18,23 @@
         android:textStyle="normal" />
 
     <ListView
-        android:id="@+id/myGamesListView"
+        android:id="@+id/listview_myCreatedGames"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/manageItemsButton_done"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/header_myItemsList"
-        android:layout_marginRight="19dp" >
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/header_myItemsList" >
 
     </ListView>
+
+    <TextView
+        android:id="@+id/header_myItemsList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="@string/header_myCreatedGamesList"
+        android:textSize="18.0sp"
+        android:textStyle="bold" />
     
 </RelativeLayout>

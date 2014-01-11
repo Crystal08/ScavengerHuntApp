@@ -9,12 +9,17 @@
         android:targetSdkVersion="17" />
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    
     <application
         android:name=".ScavengerHuntApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+        
         <activity
             android:name="com.example.scavengerhuntapp.StartActivity"
             android:label="@string/app_name" >
@@ -23,6 +28,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+       
        <!-- Login activity is started when the StartActivity is done with
         Parse.com initialization -->
         <activity android:name="LoginActivity" android:label="Login"></activity>
@@ -30,7 +36,20 @@
         <activity android:name="NewGameActivity" android:label="NewGame"></activity>
         <activity android:name="GameItemsActivity" android:label="GameItems"></activity>
         <activity android:name="GamePlayersActivity" android:label="GamePlayers"></activity>
-        <activity android:name="ViewMyGamesActivity" android:label="ViewMyGames"></activity>
+        <activity android:name="ViewMyCreatedGamesActivity" android:label="ViewMyCreatedGames"></activity>
+        <activity android:name="EditGameActivity" android:label="EditGame"></activity>
+        <activity android:name="EditGameItemsActivity" android:label="EditGameItems"></activity>
+        <activity android:name="EditGamePlayersActivity" android:label="EditGamePlayers"></activity>
+        
+       <!--  See https://parse.com/tutorials/android-push-notifications -->
+        <service android:name="com.parse.PushService" />
+        <receiver android:name="com.parse.ParseBroadcastReceiver">
+            <intent-filter >
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+            </intent-filter>
+        </receiver>
+    
     </application>
 
 </manifest>

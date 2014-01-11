@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_vertical"
+    android:layout_margin="10dp" >
+    
+    <TextView
+        android:id="@+id/header_currentItemsList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:text="@string/header_itemeditlist"
+        android:textSize="18.0sp"
+        android:textStyle="bold" />
+    
+    <Button
+        android:id="@+id/editItemsButton_continue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/editItemsButton_cancel"
+        android:layout_alignBottom="@+id/editItemsButton_cancel"
+        android:layout_alignParentRight="true"
+        android:gravity="center"
+        android:text="@string/label_continue"
+        android:textSize="16sp"
+        android:textStyle="normal" />
+
+    <Button
+        android:id="@+id/editItemsButton_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:gravity="center"
+        android:text="@string/label_cancel"
+        android:textSize="16sp"
+        android:textStyle="normal" />
+    
+    <Button
+        android:id="@+id/editItemsButton_addItem"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/editItemsButton_continue"
+        android:layout_alignParentLeft="true"
+        android:gravity="center"
+        android:text="@string/label_additem"
+        android:textSize="16sp"
+        android:textStyle="normal" />
+
+    <EditText
+        android:id="@+id/enterItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/editItemsButton_addItem"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="15dp"
+        android:ems="10"
+        android:hint="@string/hint_edititem"
+        android:imeOptions="actionDone"
+        android:inputType="text" />
+
+    <ListView
+        android:id="@+id/gameItemsEditListView"
+        android:layout_width="275dp"
+        android:layout_height="204dp"
+        android:layout_above="@+id/enterItem"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="15dp" >
+    </ListView>
+
+    <TextView
+        android:id="@+id/hint_editremoveitem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/gameItemsEditListView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignRight="@+id/header_currentItemsList"
+        android:layout_below="@+id/header_currentItemsList"
+        android:text="@string/hint_editremoveitem" />
+    
+</RelativeLayout>    

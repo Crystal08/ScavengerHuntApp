@@ -38,7 +38,7 @@
     <string name="label_loginEmailAlreadyExists">Already a user with that email address.  Please choose a new email</string> 
     <string name="label_selectOption">What would you like to do?</string>
     <string name="label_newgame">Start a new Game</string>
-    <string name="label_mygames">View My Games</string>
+    <string name="label_mygames">View Games I Created</string>
     <string name="label_gamesiamplaying">View Games I am Playing</string>
     <string name="label_joingame">Join a Game</string>
       
@@ -58,12 +58,24 @@
       <!-- Game Players Manage -->
     <string name="header_playerlist">Choose players for this game:</string>  
         
-      <!-- View My Games -->
-    <string name="header_myGamesList">My Games:</string>
+      <!-- View My Created Games -->
+    <string name="header_myCreatedGamesList">Games I Created: (click to edit)</string>
     <string name="label_back">Back</string>
-
     
-   
+      <!--  Edit My Created Games -->
+    <string name="prompt_editgamename">Would you like to rename this game?</string>
+    <string name="hint_editgamename">e.g. Sports Cars Hunt</string>
+    <string name="label_editStartDate">Edit Start Date</string>
+    <string name="label_editStartTime">Edit Start Time</string>
+    <string name="label_editEndDate">Edit End Date</string>
+    <string name="label_editEndTime">Edit End Time</string>
     
-
+      <!--  Game Items Edit  -->
+    <string name="hint_edititem">Add new item?</string>  
+    <string name="header_itemeditlist">Current items to find for this game:</string>
+    
+      <!--  Game Players Edit  -->
+    <string name="header_currentplayerlist">Update players for this game?</string>
+    <string name="hint_editremoveitem">(Click to remove items.)</string>
+  
 </resources>

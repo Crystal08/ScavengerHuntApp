@@ -51,41 +51,40 @@
         android:textStyle="normal" />
 
     <Button
-        android:id="@+id/newGameButton_setStartDate"
+        android:id="@+id/newGameButton_setEndTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/newGameButton_cancel"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/newGame_name"
-        android:layout_marginTop="18dp"
-        android:text="@string/label_setStartDate" />
+        android:layout_marginBottom="44dp"
+        android:text="@string/label_setEndTime" />
+
+    <Button
+        android:id="@+id/newGameButton_setEndDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/newGameButton_setEndTime"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:text="@string/label_setEndDate" />
 
     <Button
         android:id="@+id/newGameButton_setStartTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignRight="@+id/newGameButton_setStartDate"
-        android:layout_below="@+id/newGameButton_setStartDate"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
         android:text="@string/label_setStartTime" />
 
     <Button
-        android:id="@+id/newGameButton_setEndDate"
+        android:id="@+id/newGameButton_setStartDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/newGameButton_setStartTime"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/newGameButton_setStartTime"
-        android:layout_marginTop="31dp"
-        android:text="@string/label_setEndDate" />
-
-    <Button
-        android:id="@+id/newGameButton_setEndTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/newGameButton_setEndDate"
-        android:text="@string/label_setEndTime" />
+        android:text="@string/label_setStartDate" />
 
 </RelativeLayout>

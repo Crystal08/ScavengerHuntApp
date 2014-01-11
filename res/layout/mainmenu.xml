@@ -40,7 +40,7 @@
         />
 
         <Button
-         android:id="@+id/mainMenuButton_myGames"
+         android:id="@+id/mainMenuButton_myCreatedGames"
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
          android:gravity="center"

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_gravity="center_vertical"
+    android:layout_margin="10dp"
+    android:orientation="vertical" >
+
+    <TextView
+      android:id="@+id/header_editGame"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="10dp"
+      android:text="@string/prompt_editgamename"
+      android:textSize="18.0sp"
+      android:textStyle="bold" />
+    
+  <EditText
+      android:id="@+id/editGame_name"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_alignParentLeft="true"
+      android:layout_below="@+id/header_editGame"
+      android:ems="10"
+      android:imeOptions="actionDone"
+      android:inputType="text" />
+    
+  <Button
+      android:id="@+id/editGameButton_cancel"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignBaseline="@+id/editGameButton_continue"
+      android:layout_alignBottom="@+id/editGameButton_continue"
+      android:layout_alignParentLeft="true"
+      android:gravity="center"
+      android:text="@string/label_cancel"
+      android:textSize="16sp"
+      android:textStyle="normal" />
+
+ <Button
+      android:id="@+id/editGameButton_continue"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentBottom="true"
+      android:layout_alignParentRight="true"
+      android:gravity="center"
+      android:text="@string/label_continue"
+      android:textSize="16sp"
+      android:textStyle="normal" />
+ 
+ <Button
+      android:id="@+id/editGameButton_setStartDate"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentLeft="true"
+      android:layout_alignParentRight="true"
+      android:layout_below="@+id/editGame_name"
+      android:layout_marginTop="18dp"
+      android:text="@string/label_editStartDate" />
+
+ <Button
+      android:id="@+id/editGameButton_setStartTime"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentLeft="true"
+      android:layout_alignRight="@+id/editGameButton_setStartDate"
+      android:layout_below="@+id/editGameButton_setStartDate"
+      android:text="@string/label_editStartTime" />
+
+ <Button
+      android:id="@+id/editGameButton_setEndDate"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentLeft="true"
+      android:layout_alignParentRight="true"
+      android:layout_below="@+id/editGameButton_setStartTime"
+      android:layout_marginTop="31dp"
+      android:text="@string/label_editEndDate" />
+
+ <Button
+      android:id="@+id/editGameButton_setEndTime"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentLeft="true"
+      android:layout_alignParentRight="true"
+      android:layout_below="@+id/editGameButton_setEndDate"
+      android:text="@string/label_editEndTime" />  
+
+</RelativeLayout>  

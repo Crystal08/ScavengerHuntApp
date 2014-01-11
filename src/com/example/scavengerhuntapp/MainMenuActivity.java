@@ -1,6 +1,7 @@
 package com.example.scavengerhuntapp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -8,8 +9,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.content.Intent;
 
+import com.parse.ParseAnalytics;
 import com.parse.ParseUser;
 
 public class MainMenuActivity extends Activity {
@@ -26,6 +27,8 @@ public class MainMenuActivity extends Activity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.mainmenu);
     setupButtonCallbacks();
+    // see https://parse.com/tutorials/android-push-notifications 
+    ParseAnalytics.trackAppOpened(getIntent());
   }
 
   public void onResume() {
@@ -40,8 +43,6 @@ public class MainMenuActivity extends Activity {
     newGameButton = (Button) findViewById(R.id.newGameButton_name);
     newGameButton.setOnClickListener(new OnClickListener() {
       public void onClick(View v) {
-        // XXX open NewGameActivity
-        // Intent i = new Intent(mThisActivity, NewGameActivity.class);
         Intent i = new Intent(MainMenuActivity.this, NewGameActivity.class);
         MainMenuActivity.this.startActivity(i);
       }
@@ -56,11 +57,10 @@ public class MainMenuActivity extends Activity {
       }
     });
 
-    myGamesButton = (Button) findViewById(R.id.mainMenuButton_myGames);
+    myGamesButton = (Button) findViewById(R.id.mainMenuButton_myCreatedGames);
     myGamesButton.setOnClickListener(new OnClickListener() {
       public void onClick(View v) {
-        // XXX open MyGamesActivity
-        Intent i = new Intent(MainMenuActivity.this, ViewMyGamesActivity.class);
+        Intent i = new Intent(MainMenuActivity.this, ViewMyCreatedGamesActivity.class);
         MainMenuActivity.this.startActivity(i);
       }
     });

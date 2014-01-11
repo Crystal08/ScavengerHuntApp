@@ -199,7 +199,7 @@ public class NewGameActivity extends Activity {
     endMinute = minute;
   };
   
-  //compile start and end Date objects with start and end datetimes
+  //compile start and end Date objects with selected start and end datetimes
   private Date returnStartDateTime(){
     Calendar c1 = Calendar.getInstance();
     //fill Calendar instance with user-inputted values, then set
@@ -225,7 +225,7 @@ public class NewGameActivity extends Activity {
     newGameButton = (Button) findViewById(R.id.newGameButton_continue);
     newGameButton.setOnClickListener(new OnClickListener() {
       public void onClick(View v) { 
-        gameInfo.put("gameOwner", ParseUser.getCurrentUser().toString().trim());
+        gameInfo.put("gameOwner", ParseUser.getCurrentUser().getObjectId());
         gameInfo.put("gameName", userInputGameName.getText().toString().trim());
         gameInfo.put("gameStartDateTime", returnStartDateTime());
         gameInfo.put("gameEndDateTime", returnEndDateTime());
@@ -235,14 +235,14 @@ public class NewGameActivity extends Activity {
                 if (e == null) {   
                   Log.d("ScavengerHuntApp", startDateTime.toString()); 
                   final String gameInfoId = gameInfo.getObjectId();
-                  Intent i = new Intent(NewGameActivity.this, GameItemsActivity.class);
+                  final Intent i = new Intent(NewGameActivity.this, GameItemsActivity.class);
                   i.putExtra("gameInfoId", gameInfoId);
                   NewGameActivity.this.startActivity(i);
                 }
                 else{
                   Context context = getApplicationContext();
                   CharSequence text = "Sorry, app has encountered a problem.";
-                  int duration = Toast.LENGTH_SHORT;                     
+                  final int duration = Toast.LENGTH_SHORT;                     
                   Toast.makeText(context, text, duration).show();
                   Log.d("ScavengerHuntApp", Log.getStackTraceString(e));
                   finish();

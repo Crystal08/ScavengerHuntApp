@@ -8,7 +8,9 @@ import android.widget.Toast;
 
 import com.parse.Parse;
 import com.parse.ParseACL;
+import com.parse.ParseInstallation;
 import com.parse.ParseUser;
+import com.parse.PushService;
 
 /**
  * Top level ScavengerHuntApplication declared as the application in the AndroidManifest.xml.
@@ -43,9 +45,12 @@ public class ScavengerHuntApplication extends Application {
 				ParseACL defaultACL = new ParseACL();
 				defaultACL.setPublicReadAccess(true);
 				ParseACL.setDefaultACL(defaultACL, true);
-				Log.i(TAG, "Parse.initialize - done");
 				// add some delay, to show the splash screen
 				wait(START_WAIT_TIME);
+				//see https://parse.com/tutorials/android-push-notifications
+				PushService.setDefaultPushCallback(this, MainMenuActivity.class);
+				ParseInstallation.getCurrentInstallation().saveInBackground();
+				Log.i(TAG, "Parse.initialize - done");
 			}
 		} catch (Exception ex) {
 			Log.e(TAG + "." + "Exception in initializeParse", ex.getMessage());
