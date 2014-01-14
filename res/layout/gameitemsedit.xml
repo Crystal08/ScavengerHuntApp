@@ -16,7 +16,7 @@
         android:textStyle="bold" />
     
     <Button
-        android:id="@+id/editItemsButton_continue"
+        android:id="@+id/editItemsButton_done"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/editItemsButton_cancel"
@@ -37,29 +37,6 @@
         android:text="@string/label_cancel"
         android:textSize="16sp"
         android:textStyle="normal" />
-    
-    <Button
-        android:id="@+id/editItemsButton_addItem"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/editItemsButton_continue"
-        android:layout_alignParentLeft="true"
-        android:gravity="center"
-        android:text="@string/label_additem"
-        android:textSize="16sp"
-        android:textStyle="normal" />
-
-    <EditText
-        android:id="@+id/enterItem"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/editItemsButton_addItem"
-        android:layout_alignParentLeft="true"
-        android:layout_marginBottom="15dp"
-        android:ems="10"
-        android:hint="@string/hint_edititem"
-        android:imeOptions="actionDone"
-        android:inputType="text" />
 
     <ListView
         android:id="@+id/gameItemsEditListView"
@@ -79,5 +56,28 @@
         android:layout_alignRight="@+id/header_currentItemsList"
         android:layout_below="@+id/header_currentItemsList"
         android:text="@string/hint_editremoveitem" />
+
+    <EditText
+        android:id="@+id/enterItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/editItemsButton_done"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="52dp"
+        android:ems="10"
+        android:hint="@string/hint_edititem"
+        android:imeOptions="actionDone"
+        android:inputType="text" />
+
+    <Button
+        android:id="@+id/editItemsButton_addItem"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/editItemsButton_done"
+        android:layout_alignParentLeft="true"
+        android:gravity="center"
+        android:text="@string/label_additem"
+        android:textSize="16sp"
+        android:textStyle="normal" />
     
 </RelativeLayout>    

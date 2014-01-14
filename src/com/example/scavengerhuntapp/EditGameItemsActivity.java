@@ -19,10 +19,12 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 public class EditGameItemsActivity extends Activity {  
   private EditText userInput;
@@ -43,64 +45,69 @@ public class EditGameItemsActivity extends Activity {
     final Intent i = getIntent(); 
     final Context context = this;
     query.getInBackground(i.getStringExtra("gameInfoId"), new GetCallback<ParseObject>() {
-      public void done(ParseObject gameInfo, ParseException e) {
+      public void done(final ParseObject gameInfo, ParseException e) {
         if (e == null) {
-          JSONArray items = gameInfo.getJSONArray("itemsList"); 
-          if (items != null) {        
-            //Now have to convert JSONArray 'items' to String Array 'itemsList' so that ArrayAdapter will accept it as argument
-            List<String> itemsList = new ArrayList<String>();
-            for(int i = 0; i < items.length(); i++){
-              try{             
-                itemsList.add(items.getString(i));
+          final ParseQuery<ParseObject> item_query = ParseQuery.getQuery("Item");
+          item_query.whereEqualTo("gameId", gameInfo.getObjectId());
+          item_query.findInBackground(new FindCallback<ParseObject>() {
+            public void done(final List<ParseObject> itemsList, ParseException e) {
+              if (e == null) {
+                //convert List<ParseObject> to List<String> to be accepted by ArrayAdapter
+                final List<String> itemNamesList = new ArrayList<String>();
+                for(int i = 0; i < itemsList.size(); i++){
+                  itemNamesList.add(itemsList.get(i).getString("itemName")); 
+                }
+                //list current items
+                final ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, itemNamesList); 
+                final ListView listView = (ListView) findViewById(R.id.gameItemsEditListView);
+                listView.setAdapter(adapter); 
+                
+                //delete item onClick and refresh list displayed
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                  public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
+                    //delete Parse record of clicked item
+                    final String item = (String) parent.getItemAtPosition(position);
+                    final ParseQuery<ParseObject> remove_item_query = ParseQuery.getQuery("Item");
+                    remove_item_query.whereEqualTo("itemName", item);
+                    remove_item_query.getFirstInBackground(new GetCallback<ParseObject>() {
+                      public void done(final ParseObject item, ParseException e) {
+                        if (e == null) {
+                          item.deleteInBackground(); 
+                          final ParseQuery<ParseObject> updated_item_query = ParseQuery.getQuery("Item");
+                          updated_item_query.whereEqualTo("gameId", gameInfo.getObjectId());
+                          updated_item_query.findInBackground(new FindCallback<ParseObject>() {
+                            public void done(final List<ParseObject> updated_itemsList, ParseException exc) {
+                              if (exc == null) {
+                                final List<String> updatedItemNamesList = new ArrayList<String>();
+                                for(int j = 0; j < updatedItemNamesList.size(); j++) {
+                                  updatedItemNamesList.add(updated_itemsList.get(j).getString("itemName"));
+                                }
+                                final ArrayAdapter<String> updated_adapter = new ArrayAdapter<String> (context, android.R.layout.simple_list_item_1, updatedItemNamesList);
+                                listView.setAdapter(updated_adapter);
+                                finish();
+                                startActivity(getIntent());
+                              }
+                              else {
+                                Log.d("ScavengerHuntApp", "Error retrieving updated_itemsList: " + Log.getStackTraceString(exc));
+                              }
+                            }
+                          });
+                        }
+                        else {
+                          Log.d("ScavengerHuntApp", "Error retrieving item to delete: " + Log.getStackTraceString(e));
+                        }
+                      }
+                    });
+                  }
+                });  
+                
               }
-              catch (Exception exc) {
-                Log.d("ScavengerHuntApp", "JSONObject exception: " + Log.getStackTraceString(exc));
+              else {
+                Log.d("ScavengerHuntApp", "itemsList retrieval error: " + Log.getStackTraceString(e));
               }
             }
-            final ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, itemsList); 
-            ListView listView = (ListView) findViewById(R.id.gameItemsEditListView);
-            listView.setAdapter(adapter); 
-            //click on an item to remove it
-            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-              public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
-                final String item = (String) parent.getItemAtPosition(position);
-                adapter.remove(item);
-                adapter.notifyDataSetChanged();
-                view.setAlpha(1);
-                //remove item from Parse by saving only what is now displayed in list
-                //set list
-                final ArrayList<String> currentItemList = new ArrayList<String>();
-                for(int i = 0; i < (adapter.getCount()); i++) {
-                  currentItemList.add(adapter.getItem(i));
-                }
-                //save list
-                final ParseQuery<ParseObject> query = ParseQuery.getQuery("gameInfo");
-                final Intent i = getIntent();    
-                query.getInBackground(i.getStringExtra("gameInfoId"), new GetCallback<ParseObject>() {
-                  public void done(ParseObject gameInfo, ParseException e) {
-                    if (e == null) { 
-                      gameInfo.put("itemsList", currentItemList);
-                      gameInfo.saveInBackground();
-                      finish();
-                      startActivity(getIntent()); 
-                    }     
-                    else{
-                      Context context = getApplicationContext();
-                      CharSequence text = "Sorry, there was a problem saving that update. Please try again.";
-                      int duration = Toast.LENGTH_SHORT;                     
-                      Toast.makeText(context, text, duration).show();
-                      Log.d("ScavengerHuntApp", "ParseObject retrieval error: " + Log.getStackTraceString(e));
-                      finish();
-                      startActivity(getIntent());
-                    }
-                  }  
-                });    
-                
-                
-              }
-            });
-          }
-        }
+          });  
+        }  
         else {
           CharSequence text = "Sorry, there was a problem. Just a sec.";
           int duration = Toast.LENGTH_SHORT;                     
@@ -122,23 +129,14 @@ public class EditGameItemsActivity extends Activity {
         query.getInBackground(i.getStringExtra("gameInfoId"), new GetCallback<ParseObject>() {
           public void done(ParseObject gameInfo, ParseException e) {
             if (e == null) {
-              final String new_item = userInput.getText().toString().trim(); 
-              JSONArray items = gameInfo.getJSONArray("itemsList"); 
-              if (items != null) {
-                items.put(new_item); 
-                gameInfo.put("itemsList", items);   
-                gameInfo.saveInBackground();
-                finish();
-                startActivity(getIntent()); 
-              }  
-              else { 
-                JSONArray new_items = new JSONArray();
-                new_items.put(new_item);
-                gameInfo.put("itemsList", new_items);
-                gameInfo.saveInBackground();
-                finish();
-                startActivity(getIntent());
-             }
+              final String new_item = userInput.getText().toString().trim();
+              final ParseObject newItem = new ParseObject("Item");
+              newItem.put("itemName", new_item);
+              newItem.put("ownerId", ParseUser.getCurrentUser().getObjectId());
+              newItem.put("gameId", gameInfo.getObjectId());
+              newItem.saveInBackground();
+              finish();
+              startActivity(getIntent());
             }    
             else{
               Context context = getApplicationContext();
@@ -153,7 +151,7 @@ public class EditGameItemsActivity extends Activity {
         });    
       } 
     }); 
-    doneButton = (Button) findViewById(R.id.editItemsButton_continue); 
+    doneButton = (Button) findViewById(R.id.editItemsButton_done); 
     doneButton.setOnClickListener(new OnClickListener() {
       public void onClick(View v) {
         Context context = getApplicationContext();
@@ -163,9 +161,8 @@ public class EditGameItemsActivity extends Activity {
         finish();
         final Intent intent = getIntent();    
         final String gameInfoId = intent.getStringExtra("gameInfoId");
-        Log.d("ScavengerHuntApp", "gameInfoId: " + gameInfoId);
         final Intent i = new Intent(EditGameItemsActivity.this, EditGamePlayersActivity.class);
-        i.putExtra("gameInfoId", gameInfoId);  
+        i.putExtra("gameInfoId", gameInfoId);        
         EditGameItemsActivity.this.startActivity(i);
       } 
     });
@@ -180,6 +177,3 @@ public class EditGameItemsActivity extends Activity {
   }    
 
 }
-
-
-

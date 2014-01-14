@@ -40,6 +40,8 @@
         <activity android:name="EditGameActivity" android:label="EditGame"></activity>
         <activity android:name="EditGameItemsActivity" android:label="EditGameItems"></activity>
         <activity android:name="EditGamePlayersActivity" android:label="EditGamePlayers"></activity>
+        <activity android:name="ViewMyInvitedGamesActivity" android:label="ViewMyInvitedGames"></activity>
+        <activity android:name="PlayGameActivity" android:label="PlayGame"></activity>
         
        <!--  See https://parse.com/tutorials/android-push-notifications -->
         <service android:name="com.parse.PushService" />

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_vertical"
+    android:layout_margin="10dp" >
+
+    <TextView
+        android:id="@+id/header_myInvitedGamesList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="@string/header_myInvitedGamesList"
+        android:textSize="18.0sp"
+        android:textStyle="bold" />
+
+    <ListView
+        android:id="@+id/listview_myInvitedGames"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/viewMyInvitedGamesButton_back"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/header_myInvitedGamesList" >
+
+    </ListView>
+
+    <Button
+        android:id="@+id/viewMyInvitedGamesButton_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:gravity="center"
+        android:text="@string/label_back"
+        android:textSize="16sp"
+        android:textStyle="normal" />
+    
+</RelativeLayout>

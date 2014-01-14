@@ -51,9 +51,8 @@ public class MainMenuActivity extends Activity {
     joinGameButton = (Button) findViewById(R.id.mainMenuButton_joinGame);
     joinGameButton.setOnClickListener(new OnClickListener() {
       public void onClick(View v) {
-        // XXX open JoinGameActivity
-        // Intent i = new Intent(mThisActivity, JoinGameActivity.class);
-        // mThisActivity.startActivity(i);
+        Intent i = new Intent(MainMenuActivity.this, ViewMyInvitedGamesActivity.class);
+        MainMenuActivity.this.startActivity(i);
       }
     });
 

@@ -3,8 +3,6 @@ package com.example.scavengerhuntapp;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.json.JSONArray;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -18,10 +16,12 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 public class GameItemsActivity extends Activity {  
   private EditText userInput;
@@ -44,23 +44,26 @@ public class GameItemsActivity extends Activity {
     query.getInBackground(i.getStringExtra("gameInfoId"), new GetCallback<ParseObject>() {
       public void done(ParseObject gameInfo, ParseException e) {
         if (e == null) {
-          JSONArray items = gameInfo.getJSONArray("itemsList"); 
-          if (items != null) {        
-            //Now have to convert JSONArray 'items' to String Array 'itemsList' so that ArrayAdapter will accept it as argument
-            List<String> itemsList = new ArrayList<String>();
-            for(int i = 0; i < items.length(); i++){
-              try{             
-                itemsList.add(items.getString(i));
+          final ParseQuery<ParseObject> item_query = ParseQuery.getQuery("Item");
+          item_query.whereEqualTo("gameId", gameInfo.getObjectId());
+          item_query.findInBackground(new FindCallback<ParseObject>() {
+            public void done(final List<ParseObject> itemsList, ParseException e) {
+              if (e == null) {
+                //convert List<ParseObject> to List<String> to be accepted by ArrayAdapter
+                final List<String> itemNamesList = new ArrayList<String>();
+                for(int i = 0; i < itemsList.size(); i++){
+                  itemNamesList.add(itemsList.get(i).getString("itemName")); 
+                }
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, itemNamesList); 
+                ListView listView = (ListView) findViewById(R.id.gameItemsListView);
+                listView.setAdapter(adapter);  
               }
-              catch (Exception exc) {
-                Log.d("ScavengerHuntApp", "JSONObject exception: " + Log.getStackTraceString(exc));
+              else {
+                Log.d("ScavengerHuntApp", "itemsList retrieval error: " + Log.getStackTraceString(e));
               }
-            }
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, itemsList); 
-            ListView listView = (ListView) findViewById(R.id.gameItemsListView);
-            listView.setAdapter(adapter);  
-          }
-        }
+            } 
+          });  
+        }  
         else {
           CharSequence text = "Sorry, there was a problem. Just a sec.";
           int duration = Toast.LENGTH_SHORT;                     
@@ -82,23 +85,14 @@ public class GameItemsActivity extends Activity {
         query.getInBackground(i.getStringExtra("gameInfoId"), new GetCallback<ParseObject>() {
           public void done(ParseObject gameInfo, ParseException e) {
             if (e == null) {
-              final String new_item = userInput.getText().toString().trim(); 
-              JSONArray items = gameInfo.getJSONArray("itemsList"); 
-              if (items != null) {
-                items.put(new_item); 
-                gameInfo.put("itemsList", items);   
-                gameInfo.saveInBackground();
-                finish();
-                startActivity(getIntent()); 
-              }  
-              else { 
-                JSONArray new_items = new JSONArray();
-                new_items.put(new_item);
-                gameInfo.put("itemsList", new_items);
-                gameInfo.saveInBackground();
-                finish();
-                startActivity(getIntent());
-             }
+              final String new_item = userInput.getText().toString().trim();
+              final ParseObject newItem = new ParseObject("Item");
+              newItem.put("itemName", new_item);
+              newItem.put("ownerId", ParseUser.getCurrentUser().getObjectId());
+              newItem.put("gameId", gameInfo.getObjectId());
+              newItem.saveInBackground();
+              finish();
+              startActivity(getIntent());
             }    
             else{
               Context context = getApplicationContext();

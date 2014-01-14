@@ -18,8 +18,11 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseException;
+import com.parse.ParseInstallation;
 import com.parse.ParseObject;
+import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
@@ -45,7 +48,6 @@ public class GamePlayersActivity extends Activity {
       public void done(List<ParseUser> userList, ParseException e) {
         if (e == null) {
           if (userList != null) {        
-            //Now have to convert JSONArray 'userList' to String Array 'usernameList' so that ArrayAdapter will accept it as argument
             List<String> usernameList = new ArrayList<String>();
             for(int i = 0; i < userList.size(); i++){
               try{             
@@ -113,11 +115,11 @@ public class GamePlayersActivity extends Activity {
     return selectedPlayers;
   }
 
-  private void saveSelectedPlayers(List<ParseUser> selectedPlayersList){
+  private void saveSelectedPlayers(final List<ParseUser> selectedPlayersList){
+    final Intent intent = getIntent();
     for(int i = 0; i < selectedPlayersList.size(); i++){
       final ParseObject gamePlayer= new ParseObject("gamePlayer");
       final ParseUser player = selectedPlayersList.get(i); 
-      final Intent intent = getIntent();
       gamePlayer.put("gameId", intent.getStringExtra("gameInfoId"));
       gamePlayer.put("playerId", player.getObjectId());
       gamePlayer.saveInBackground(new SaveCallback(){
@@ -131,10 +133,27 @@ public class GamePlayersActivity extends Activity {
         }   
       });
     }
-  }    
- 
-
-    
+    inviteSelectedPlayers(intent.getStringExtra("gameInfoId"), selectedPlayersList);
+  } 
+  
+  private void inviteSelectedPlayers(final String gameId, final List<ParseUser> selectedPlayersList) {
+    final ParseQuery<ParseObject> query = ParseQuery.getQuery("gameInfo");   
+    query.getInBackground(gameId, new GetCallback<ParseObject>() {
+      public void done(final ParseObject game, final ParseException e) {
+        if (e == null) {
+          for(final ParseUser invitee : selectedPlayersList) {
+            //see https://parse.com/questions/push-notifications-on-android-to-specific-users
+            ParsePush parsePush = new ParsePush();
+            ParseQuery<ParseInstallation> pQuery = ParseInstallation.getQuery();
+            pQuery.whereEqualTo("username", invitee);
+            parsePush.setQuery(pQuery);
+            parsePush.setMessage("You've been invited to play scavenger hunt: " + game.getString("gameName") + ", by " + ParseUser.getCurrentUser().getString("username"));
+            parsePush.sendInBackground();
+          }
+        }
+      }  
+    });
+  }  
 
 }
 
