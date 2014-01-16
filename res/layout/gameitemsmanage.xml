@@ -65,8 +65,10 @@
         android:id="@+id/gameItemsListView"
         android:layout_width="275dp"
         android:layout_height="204dp"
+        android:layout_above="@+id/enterText"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/header_myItemsList" >
+
     </ListView>
     
 </RelativeLayout>

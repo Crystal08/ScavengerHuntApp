@@ -37,10 +37,10 @@
     <string name="label_loginUsernameAlreadyExists">Already a user with that username.  Please choose a new username</string>
     <string name="label_loginEmailAlreadyExists">Already a user with that email address.  Please choose a new email</string> 
     <string name="label_selectOption">What would you like to do?</string>
-    <string name="label_newgame">Start a new Game</string>
+    <string name="label_newgame">Start a New Game</string>
     <string name="label_mygames">View Games I Created</string>
     <string name="label_gamesiamplaying">View Games I am Playing</string>
-    <string name="label_joingame">Join a Game</string>
+    <string name="label_joingame">Play a Game</string>
       
       <!-- New Game Create -->
     <string name="prompt_newgamename">What would you like to name your new game?</string>
@@ -79,10 +79,10 @@
     <string name="hint_editremoveitem">(Click to remove items.)</string>
     
       <!--  View My Invited Games -->
-    <string name="header_myInvitedGamesList">Games available: (click to join)</string>  
+    <string name="header_myInvitedGamesList">Games available: (click to play)</string>  
     
       <!--  Play Game  -->
-    <string name="header_playGameItemList">Check to claim items you\'ve found:</string>  
+    <string name="header_playGameItemList">Check to claim unfound items:</string>  
       
   
 </resources>

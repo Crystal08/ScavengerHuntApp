@@ -6,15 +6,6 @@
     android:layout_gravity="center_vertical"
     android:layout_margin="10dp" >
 
-    <TextView
-        android:id="@+id/header_gameItemsList"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:text="@string/header_playGameItemList"
-        android:textSize="18.0sp"
-        android:textStyle="bold" />
-
     <Button
         android:id="@+id/playGameButton_done"
         android:layout_width="wrap_content"
@@ -27,6 +18,16 @@
         android:textSize="16sp"
         android:textStyle="normal" />
 
+    <ListView
+        android:id="@+id/playGameItemsListView"
+        android:layout_width="275dp"
+        android:layout_height="204dp"
+        android:layout_above="@+id/playGameButton_done"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/header_gameItemsList" >
+
+    </ListView>
+
     <Button
         android:id="@+id/playGameButton_cancel"
         android:layout_width="wrap_content"
@@ -38,12 +39,14 @@
         android:textSize="16sp"
         android:textStyle="normal" />
 
-    <ListView
-        android:id="@+id/playGameItemsListView"
-        android:layout_width="275dp"
-        android:layout_height="204dp"
+    <TextView
+        android:id="@+id/header_gameItemsList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/header_gameItemsList" >
-    </ListView>
+        android:layout_alignParentTop="true"
+        android:text="@string/header_playGameItemList"
+        android:textSize="18.0sp"
+        android:textStyle="bold" />
     
 </RelativeLayout>

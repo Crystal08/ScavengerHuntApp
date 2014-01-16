@@ -39,13 +39,14 @@
         android:textSize="18.0sp"
         android:textStyle="bold" />
     
-    
     <ListView
         android:id="@+id/gamePlayersListView"
         android:layout_width="275dp"
         android:layout_height="204dp"
+        android:layout_above="@+id/managePlayersButton_done"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/header_myPlayersList" >
+
     </ListView>
     
 </RelativeLayout>

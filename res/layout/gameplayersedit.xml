@@ -43,8 +43,10 @@
         android:id="@+id/gamePlayersEditListView"
         android:layout_width="275dp"
         android:layout_height="204dp"
+        android:layout_above="@+id/editPlayersButton_done"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/header_currentPlayersList" >
+
     </ListView>
     
 </RelativeLayout>

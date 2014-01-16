@@ -47,7 +47,7 @@ public final class R {
         public static final int header_currentItemsList=0x7f080008;
         public static final int header_currentPlayersList=0x7f080017;
         public static final int header_editGame=0x7f080000;
-        public static final int header_gameItemsList=0x7f08002c;
+        public static final int header_gameItemsList=0x7f08002f;
         public static final int header_myInvitedGamesList=0x7f080031;
         public static final int header_myItemsList=0x7f08000f;
         public static final int header_myPlayersList=0x7f08001b;
@@ -73,9 +73,9 @@ public final class R {
         public static final int newGameButton_setStartDate=0x7f08002b;
         public static final int newGameButton_setStartTime=0x7f08002a;
         public static final int newGame_name=0x7f080025;
-        public static final int playGameButton_cancel=0x7f08002e;
-        public static final int playGameButton_done=0x7f08002d;
-        public static final int playGameItemsListView=0x7f08002f;
+        public static final int playGameButton_cancel=0x7f08002d;
+        public static final int playGameButton_done=0x7f08002c;
+        public static final int playGameItemsListView=0x7f08002e;
         public static final int textbox_loginEmail=0x7f08001f;
         public static final int textbox_loginPassword=0x7f08001e;
         public static final int textbox_loginUsername=0x7f08001d;

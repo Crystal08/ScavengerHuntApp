@@ -18,15 +18,14 @@
         android:textStyle="bold" />
 
         <Button
-         android:id="@+id/newGameButton_name"
-        android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
-         android:gravity="center"
-         android:text="@string/label_newgame"
-         android:textSize="16sp"
-         android:textStyle="normal"
-        android:layout_marginBottom="10dp"
-         />
+            android:id="@+id/newGameButton_name"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:text="@string/label_newgame"
+            android:textSize="16sp"
+            android:textStyle="normal" />
 
     <Button
         android:id="@+id/mainMenuButton_joinGame"
